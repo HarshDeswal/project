@@ -4,8 +4,13 @@ import re
 import tensorflow as tf
 import random
 import spacy
+import subprocess
 
-nlp = spacy.load('en_core_web_sm')
+try:
+    nlp = spacy.load('en_core_web_sm')
+except OSError:
+    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
+    nlp = spacy.load('en_core_web_sm')
 
 with open('Intent.json') as f:
     intents = json.load(f)
